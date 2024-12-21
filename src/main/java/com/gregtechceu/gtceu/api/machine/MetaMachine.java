@@ -21,7 +21,6 @@ import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiPart;
 import com.gregtechceu.gtceu.api.machine.trait.MachineTrait;
 import com.gregtechceu.gtceu.api.misc.IOFilteredInvWrapper;
 import com.gregtechceu.gtceu.api.misc.IOFluidHandlerList;
-import com.gregtechceu.gtceu.api.misc.StackedInsertionInvWrapper;
 import com.gregtechceu.gtceu.api.transfer.fluid.IFluidHandlerModifiable;
 import com.gregtechceu.gtceu.common.cover.FluidFilterCover;
 import com.gregtechceu.gtceu.common.cover.ItemFilterCover;
@@ -696,12 +695,10 @@ public class MetaMachine implements IEnhancedManaged, IToolable, ITickSubscripti
 
         IOFilteredInvWrapper handlerList = new IOFilteredInvWrapper(list, io,
                 getItemCapFilter(side, IO.IN), getItemCapFilter(side, IO.OUT));
-        StackedInsertionInvWrapper itemHandler = new StackedInsertionInvWrapper(handlerList);
-
-        if (!useCoverCapability || side == null) return itemHandler;
+        if (!useCoverCapability || side == null) return handlerList;
 
         CoverBehavior cover = getCoverContainer().getCoverAtSide(side);
-        return cover != null ? cover.getItemHandlerCap(itemHandler) : itemHandler;
+        return cover != null ? cover.getItemHandlerCap(handlerList) : handlerList;
     }
 
     @Nullable
