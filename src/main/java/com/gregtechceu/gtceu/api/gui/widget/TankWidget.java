@@ -540,8 +540,11 @@ public class TankWidget extends Widget implements IRecipeIngredientSlot, IConfig
                 FluidActionResult result = FluidUtil.tryEmptyContainer(currentStack, fluidTank, Integer.MAX_VALUE, null,
                         false);
                 if (!result.isSuccess()) break;
-                ItemStack remainingStack = FluidUtil
-                        .tryEmptyContainer(currentStack, fluidTank, Integer.MAX_VALUE, null, true).getResult();
+
+                result = FluidUtil.tryEmptyContainer(currentStack, fluidTank, Integer.MAX_VALUE, null, true);
+                if (!result.isSuccess()) break;
+
+                ItemStack remainingStack = result.getResult();
                 performedEmptying = true;
 
                 currentStack.shrink(1);
